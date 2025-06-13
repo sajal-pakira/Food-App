@@ -6,24 +6,23 @@ A backend API built with Node.js, Express, and MongoDB for managing user authent
 
 ## 📁 Project Structure
 
-foodApp
 
-├── config/ # Database configuration
+├── config => Database configuration
 
-├── controllers/ # Request handlers for various routes
+├── controllers => Request handlers for various routes
 
-├── data/ # (Empty or seeded data, currently unused)
+├── data => (Empty or seeded data, currently unused)
 
-├── middlewares/ # Middleware functions like authentication
+├── middlewares => Middleware functions like authentication
 
-├── models/ # Mongoose schemas
+├── models => Mongoose schemas
 
-├── node_modules/ # Node dependencies
+├── node_modules => Node dependencies
 
-├── .env # Environment variables (NOT shared)
+├── .env =>  Environment variables (NOT shared)
 
 ├── .gitignore
 
 ├── package.json
 
-├── server.js # Main server file
+├── server.js =>  Main server file
