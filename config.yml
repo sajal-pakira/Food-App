@@ -1,0 +1,21 @@
+## 🚀 Features
+
+- 🔐 JWT-based authentication
+- 👥 User registration and login
+- 🛡️ Protected routes with middleware
+- 🧩 MVC-style structure for easy scalability
+
+## 🛠️ Tech Stack
+
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB (with Mongoose)
+- **Auth:** JSON Web Token (JWT)
+- **Middleware:** Custom Auth Middleware
+
+## ⚙️ Setup Instructions :- 
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/sajal-pakira/Food-App.git
+cd Food-App
