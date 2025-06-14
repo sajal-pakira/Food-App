@@ -4,10 +4,10 @@ const JWT = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
   try {
-    const { userName, password, email, phone } = req.body;
+    const { userName, password, email, phone, answer } = req.body;
 
     //validation
-    if (!userName || !password || !email || !phone) {
+    if (!userName || !password || !email || !phone || !answer) {
       return res.status(500).send({
         success: true,
         message: "Please provide all fields",
@@ -26,11 +26,12 @@ const registerController = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     //create user
-    const user = userModel.create({
+    const user = await userModel.create({
       userName,
       password: hashedPassword,
       email,
       phone,
+      answer,
     });
     res.status(201).send({
       success: true,
@@ -57,7 +58,7 @@ const loginController = async (req, res) => {
         message: "Please provide email and password",
       });
     }
-    const user = userModel.findOne({ email });
+    const user = await userModel.findOne({ email });
     //check user is present in database or not
     if (!user) {
       return res.status(500).send({
@@ -66,7 +67,7 @@ const loginController = async (req, res) => {
       });
     }
     // compare password
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     //validation
     if (!isMatch) {
       return res.status(500).send({
@@ -74,8 +75,8 @@ const loginController = async (req, res) => {
         message: "Wrong credential",
       });
     }
-    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET,{
-      expiresIn: '7d'
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
     });
     user.password = undefined;
     res.status(200).send({

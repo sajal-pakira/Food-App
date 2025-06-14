@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema(
       default:
         "https://imgs.search.brave.com/YSmQCdADoCkN1fNn3u1AalRn23Hi4mdzosG7OjFNdCk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYXJ0cy5jb20v/ZmlsZXMvMTAvRGVm/YXVsdC1Qcm9maWxl/LVBpY3R1cmUtUE5H/LURvd25sb2FkLUlt/YWdlLnBuZw",
     },
+    answer:{
+      type:String,
+      required:[true,'Answer is required']
+    }
   },
   { timestamps: true }
 );
