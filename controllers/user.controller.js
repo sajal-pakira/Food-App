@@ -4,9 +4,10 @@ const userModel = require("../models/user.model");
 const getUserController = async (req, res) => {
   try {
     //find user
-    const user = userModel.findById({
-      _id: req.body.id,
-    });
+    const user = await userModel.findById(req.userId); // ✅ use userId here
+    // const user = await userModel.findById({
+    //   _id: req.body.id,
+    // });
     //validation
     if (!user) {
       return res.status(404).send({
@@ -24,7 +25,7 @@ const getUserController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      Message: "Error in user API",
+      Message: "Error in get user API",
       error,
     });
   }
@@ -34,7 +35,9 @@ const getUserController = async (req, res) => {
 const updateUserController = async (req, res) => {
   try {
     //find user
-    const user = await userModel.findById({ _id: req.body.id });
+    const user = await userModel.findById(req.userId); // ✅
+    // const user = await userModel.findById({ _id: req.body.id });
+
     //validation
     if (!user) {
       return res.status(404).send({
@@ -44,15 +47,15 @@ const updateUserController = async (req, res) => {
     }
     //update
     const { userName, address, phone } = req.body;
-    if (userName) req.userName = userName;
-    if (address) req.address = address;
-    if (phone) req.phone = phone;
+    if (userName) user.userName = userName;
+    if (address) user.address = address;
+    if (phone) user.phone = phone;
     // save user
-    await user.save()
+    await user.save();
     res.status(200).send({
-      success:true,
-      Message:"User updated successfully"
-    })
+      success: true,
+      Message: "User updated successfully",
+    });
   } catch (error) {
     res.status(500).send({
       success: false,

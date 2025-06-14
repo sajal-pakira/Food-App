@@ -33,6 +33,7 @@ const registerController = async (req, res) => {
       phone,
       answer,
     });
+    user.password = undefined;
     res.status(201).send({
       success: true,
       message: "Successfully registered",
