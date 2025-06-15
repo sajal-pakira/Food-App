@@ -25,6 +25,7 @@ app.use("/api/v1/test", require("./routers/test.route"));
 app.use("/api/v1/auth", require("./routers/auth.route"));
 app.use("/api/v1/user", require("./routers/user.route"));
 app.use("/api/v1/restaurant", require("./routers/restaurant.route"));
+app.use("/api/v1/category", require("./routers/category.route"));
 
 app.get("/", (req, res) => {
   return res.status(200).send("<h1>Sajal this side</h1>");
