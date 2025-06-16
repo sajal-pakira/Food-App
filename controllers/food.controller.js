@@ -15,6 +15,7 @@ const createFoodController = async (req, res) => {
       restaurant,
       rating,
       ratingCount,
+      quantity,
     } = req.body;
 
     // Basic validation
@@ -37,6 +38,7 @@ const createFoodController = async (req, res) => {
       restaurant,
       rating,
       ratingCount,
+      quantity,
     });
 
     await newFood.save();
@@ -101,7 +103,7 @@ const getFoodByIdController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error while fetching food by ID",
-      error,
+        error: error.message || error,
     });
   }
 };
@@ -127,7 +129,7 @@ const getFoodsByRestaurantIdController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in getting food by restaurant ID",
-      error,
+        error: error.message || error,
     });
   }
 };
@@ -148,6 +150,7 @@ const updateFoodController = async (req, res) => {
       restaurant,
       rating,
       ratingCount,
+      quantity,
     } = req.body;
 
     if (!id) {
@@ -170,6 +173,7 @@ const updateFoodController = async (req, res) => {
         restaurant,
         rating,
         ratingCount,
+        quantity,
       },
       {
         new: true,
@@ -192,7 +196,7 @@ const updateFoodController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in updating food API",
-      error,
+        error: error.message || error,
     });
   }
 };

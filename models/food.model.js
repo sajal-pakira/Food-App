@@ -14,6 +14,10 @@ const foodSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Food price is required"],
     },
+    quantity:{
+        type:Number,
+        default:1,
+    },
     imageUrl: {
       type: String,
       default:
