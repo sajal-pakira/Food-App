@@ -136,9 +136,45 @@ const getFoodsByRestaurantIdController = async (req, res) => {
 const updateFoodController = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedFood = await foodModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const {
+      title,
+      description,
+      price,
+      imageUrl,
+      foodTags,
+      category,
+      code,
+      isAvailable,
+      restaurant,
+      rating,
+      ratingCount,
+    } = req.body;
+
+    if (!id) {
+      return res.status(404).send({
+        success: false,
+        message: "food id not found",
+      });
+    }
+    const updatedFood = await foodModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        price,
+        imageUrl,
+        foodTags,
+        category,
+        code,
+        isAvailable,
+        restaurant,
+        rating,
+        ratingCount,
+      },
+      {
+        new: true,
+      }
+    );
 
     if (!updatedFood) {
       return res.status(404).send({
@@ -155,7 +191,7 @@ const updateFoodController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Error while updating food",
+      message: "Error in updating food API",
       error,
     });
   }
@@ -170,7 +206,7 @@ const deleteFoodController = async (req, res) => {
     if (!deletedFood) {
       return res.status(404).send({
         success: false,
-        message: "Food item not found",
+        message: "Food item not found with this ID",
       });
     }
 
@@ -181,8 +217,8 @@ const deleteFoodController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Error while deleting food",
-      error,
+      message: "Error in deleting food API",
+      error: error.message || error,
     });
   }
 };
