@@ -21,6 +21,11 @@ A fully functional backend for a food delivery application built with **Node.js*
   - Well-organized folder structure for models, middlewares, and controllers
   - Easy to integrate with any frontend (React.js planned)
 
+## 📌 Notes
+- This is backend only. Frontend (built with React.js) will be integrated soon.
+
+- All protected routes require a valid JWT token in headers.
+
 ## 📂 Project Structure
 
 ```bash
