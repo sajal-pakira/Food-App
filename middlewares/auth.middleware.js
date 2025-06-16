@@ -2,8 +2,10 @@ const JWt = require("jsonwebtoken");
 module.exports = async (req, res, next) => {
   try {
     //get token
-    const token = req.headers["authorization"]?.split(" ")[1];
-     if (!token) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (!token) {
       return res.status(401).send({
         success: false,
         message: "Authorization token missing",
@@ -17,7 +19,7 @@ module.exports = async (req, res, next) => {
         });
       } else {
         // req.body.id = decode.id;
-         req.userId = decode.id; // ✅ safe and does not depend on request method
+        req.userId = decode.id; // ✅ safe and does not depend on request method
         next();
       }
     });

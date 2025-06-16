@@ -6,6 +6,7 @@ const {
   getFoodsByRestaurantIdController,
   updateFoodController,
   deleteFoodController,
+  placeOrderController,
 } = require("../controllers/food.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 
@@ -28,5 +29,8 @@ router.put("/update/:id", authMiddleware,updateFoodController);
 
 // DELETE: Delete food by ID
 router.delete("/delete/:id",authMiddleware ,deleteFoodController);
+
+//place order
+router.post('/placeOrder',authMiddleware,placeOrderController)
 
 module.exports = router;

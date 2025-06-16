@@ -1,4 +1,5 @@
 const foodModel = require("../models/food.model");
+const orderModel = require("../models/order.model");
 
 // Create a food item
 const createFoodController = async (req, res) => {
@@ -103,7 +104,7 @@ const getFoodByIdController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error while fetching food by ID",
-        error: error.message || error,
+      error: error.message || error,
     });
   }
 };
@@ -129,7 +130,7 @@ const getFoodsByRestaurantIdController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in getting food by restaurant ID",
-        error: error.message || error,
+      error: error.message || error,
     });
   }
 };
@@ -196,7 +197,7 @@ const updateFoodController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in updating food API",
-        error: error.message || error,
+      error: error.message || error,
     });
   }
 };
@@ -227,6 +228,49 @@ const deleteFoodController = async (req, res) => {
   }
 };
 
+//place order
+const placeOrderController = async (req, res) => {
+  try {
+    const { cart } = req.body;
+
+    if (!cart || !Array.isArray(cart) || cart.length === 0) {
+      return res.status(400).send({
+        success: false,
+        message: "Cart must be a non-empty array.",
+      });
+    }
+
+    // Calculate total price
+    let totalPrice = 0;
+    const foodIds = cart.map((item) => {
+      totalPrice += item.price;
+      return item._id; // ✅ extract only ObjectId
+    });
+
+    const newOrder = new orderModel({
+      foods: foodIds, // ✅ only IDs array
+      payments: { total: totalPrice },
+      buyer: req.userId,
+    });
+
+    await newOrder.save();
+
+    res.status(201).send({
+      success: true,
+      message: "Order placed successfully",
+      order: newOrder,
+    });
+  } catch (error) {
+    console.error("Order Error:", error);
+    res.status(500).send({
+      success: false,
+      message: "Error in place order API",
+      error: error.message || error,
+    });
+  }
+};
+
+
 module.exports = {
   createFoodController,
   getAllFoodController,
@@ -234,4 +278,5 @@ module.exports = {
   getFoodsByRestaurantIdController,
   updateFoodController,
   deleteFoodController,
+  placeOrderController,
 };
